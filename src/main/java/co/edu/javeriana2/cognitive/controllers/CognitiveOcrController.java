@@ -35,16 +35,18 @@ public class CognitiveOcrController {
         documentProcessInfo.setFileExtension(fileExtension);
         documentProcessInfo.setRootDirectory(rootDirectory);
         try {
-            cognitiveOcrService.processDocument(documentProcessInfo);
+            CognitiveOcrRsDto response = cognitiveOcrService.processDocument(documentProcessInfo);
+            LOGGER.info("FINALIZA PROCESO DE RECONOCIMIENTO COGNITIVO PARA LECTURA DE DOCUMENTOS [DT:{}]", DateUtility.getNowInLocalDateTime());
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (AbsCognitiveException e) {
+            // TODO SE DEBE IDENTIFICAR EL TIPO DE ERROR PARA REGRESAR EL HHTP CODE CORRESPONDIENTE.
+            LOGGER.error("ERROR GENERADO: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        LOGGER.info("FINALIZA PROCESO DE RECONOCIMIENTO COGNITIVO PARA LECTURA DE DOCUMENTOS [DT:{}]", DateUtility.getNowInLocalDateTime());
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Autowired
-    public ICognitiveOcrService getCognitiveOcrService() {
-        return cognitiveOcrService;
+    public void setCognitiveOcrService(ICognitiveOcrService cognitiveOcrService) {
+        this.cognitiveOcrService = cognitiveOcrService;
     }
 }

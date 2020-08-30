@@ -12,6 +12,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,32 +26,36 @@ import java.util.UUID;
 @Service
 public class AwsS3ServiceImpl implements IAwsS3Service {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AwsS3ServiceImpl.class);
+
     protected AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
 
     private String defaultRootDirectory;
 
     @Override
     public String uploadDocumentAndGetObjectKey(DocumentProcessInfoDto documentProcessInfo, UUID documentId) throws AbsCognitiveException {
+        LOGGER.info("[DI:{}] inicia proceso de carga de documento a s3", DateUtility.getNowInLocalDateTime());
         String objectKey;
         try (InputStream fileBody = new ByteArrayInputStream(documentProcessInfo.getFileContent())) {
             String bucket = documentProcessInfo.getBucketName();
             String inRootDirectory = documentProcessInfo.getRootDirectory();
             String rootDirectory = Objects.isNull(inRootDirectory) ? defaultRootDirectory : inRootDirectory;
             String extension = documentProcessInfo.getFileExtension().toLowerCase();
-            objectKey = rootDirectory.concat(DateUtility.getCurrentDateInFormat("yyyy/MM/dd"))
+            objectKey = rootDirectory.concat("/").concat(DateUtility.getCurrentDateInFormat("yyyy/MM/dd"))
                     .concat("/")
-                    .concat(documentId.toString()).concat(extension);
+                    .concat(documentId.toString()).concat(".").concat(extension);
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(documentProcessInfo.getFileContent().length);
             PutObjectRequest requestFile = new PutObjectRequest(bucket, objectKey, fileBody, objectMetadata);
             s3Client.putObject(requestFile);
         } catch (IOException e) {
-            throw new UploadDocumentException(String.format("[DN:%s] Documento corrupto en el cuerpo.", documentId.toString()));
+            throw new UploadDocumentException(String.format("[DI:%s] Documento corrupto en el cuerpo.", documentId.toString()));
         } catch (AmazonServiceException ase) {
-            throw new UploadDocumentException(String.format("[DN:%s] Error de servicio en carga documento en AWS.", documentId.toString()));
+            throw new UploadDocumentException(String.format("[DI:%s] Error de servicio en carga documento en AWS.", documentId.toString()));
         } catch (AmazonClientException ace) {
-            throw new UploadDocumentException(String.format("[DN:%s] Error de solicitud en carga documento en AWS.", documentId.toString()));
+            throw new UploadDocumentException(String.format("[DI:%s] Error de solicitud en carga documento en AWS.", documentId.toString()));
         }
+        LOGGER.info("[DI:{}] finaliza proceso de carga de documento a s3", DateUtility.getNowInLocalDateTime());
         return objectKey;
     }
 

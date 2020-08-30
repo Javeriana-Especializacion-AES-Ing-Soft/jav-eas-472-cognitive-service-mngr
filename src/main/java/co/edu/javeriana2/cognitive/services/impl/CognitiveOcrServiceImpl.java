@@ -25,11 +25,13 @@ public class CognitiveOcrServiceImpl implements ICognitiveOcrService {
     @Override
     public CognitiveOcrRsDto processDocument(DocumentProcessInfoDto documentProcessInfo) throws AbsCognitiveException {
         UUID processId = UUID.randomUUID();
-        LOGGER.info("[ID:{}] inicia proceso de validacion, carga y registro en log.", processId);
-        documentUtility.validateDocumentExtension(documentProcessInfo.getFileExtension());
+        CognitiveOcrRsDto cognitiveOcrRsDto = new CognitiveOcrRsDto();
+        cognitiveOcrRsDto.setUuid(processId);
+        LOGGER.info("[DI:{}] inicia proceso de validacion, carga y registro en log.", processId);
+        documentUtility.validateDocumentExtension(processId, documentProcessInfo.getFileExtension());
         awsS3Service.uploadDocumentAndGetObjectKey(documentProcessInfo, processId);
-        LOGGER.info("[ID:{}] finaliza proceso de validacion, carga y registro en log.", processId);
-        return null;
+        LOGGER.info("[DI:{}] finaliza proceso de validacion, carga y registro en log.", processId);
+        return cognitiveOcrRsDto;
     }
 
     @Autowired
