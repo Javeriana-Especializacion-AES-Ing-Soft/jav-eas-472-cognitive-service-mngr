@@ -1,5 +1,6 @@
 package co.edu.javeriana2.cognitive.utilities;
 
+import co.edu.javeriana2.cognitive.enums.CognitiveExceptionCode;
 import co.edu.javeriana2.cognitive.exceptions.impl.UploadDocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ public class DocumentUtility {
     public void validateDocumentExtension(UUID documentId, String extension) throws UploadDocumentException {
         LOGGER.info("[DI:{}] inicia validacion de tipo de extension sobre el documento a procesar [E:{}]", documentId, extension);
         if (!validExtensions.contains(extension.toLowerCase())) {
-            throw new UploadDocumentException("INVALID DOCUMENT EXTENSION");
+            throw new UploadDocumentException(CognitiveExceptionCode.RESTRICTED_BY_POLICY, "INVALID DOCUMENT EXTENSION");
         }
         LOGGER.info("[DI:{}] finaliza validacion de tipo de extension sobre el documento a procesar", documentId);
 

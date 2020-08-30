@@ -1,6 +1,7 @@
 package co.edu.javeriana2.cognitive.services.impl;
 
 import co.edu.javeriana2.cognitive.dtos.DocumentProcessInfoDto;
+import co.edu.javeriana2.cognitive.enums.CognitiveExceptionCode;
 import co.edu.javeriana2.cognitive.exceptions.AbsCognitiveException;
 import co.edu.javeriana2.cognitive.exceptions.impl.UploadDocumentException;
 import co.edu.javeriana2.cognitive.services.IAwsS3Service;
@@ -49,11 +50,11 @@ public class AwsS3ServiceImpl implements IAwsS3Service {
             PutObjectRequest requestFile = new PutObjectRequest(bucket, objectKey, fileBody, objectMetadata);
             s3Client.putObject(requestFile);
         } catch (IOException e) {
-            throw new UploadDocumentException(String.format("[DI:%s] Documento corrupto en el cuerpo.", documentId.toString()));
+            throw new UploadDocumentException(CognitiveExceptionCode.RESTRICTED_BY_INVALID_BODY, String.format("[DI:%s] Documento corrupto en el cuerpo.", documentId.toString()));
         } catch (AmazonServiceException ase) {
-            throw new UploadDocumentException(String.format("[DI:%s] Error de servicio en carga documento en AWS.", documentId.toString()));
+            throw new UploadDocumentException(CognitiveExceptionCode.AWS_S3_WITHOUT_COMMUNICATION, String.format("[DI:%s] Error de servicio en carga documento en AWS.", documentId.toString()));
         } catch (AmazonClientException ace) {
-            throw new UploadDocumentException(String.format("[DI:%s] Error de solicitud en carga documento en AWS.", documentId.toString()));
+            throw new UploadDocumentException(CognitiveExceptionCode.AWS_S3_WITHOUT_COMMUNICATION, String.format("[DI:%s] Error de solicitud en carga documento en AWS.", documentId.toString()));
         }
         LOGGER.info("[DI:{}] finaliza proceso de carga de documento a s3", DateUtility.getNowInLocalDateTime());
         return objectKey;

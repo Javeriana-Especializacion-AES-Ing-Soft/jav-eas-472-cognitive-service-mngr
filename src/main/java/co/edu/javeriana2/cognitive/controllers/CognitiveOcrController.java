@@ -39,9 +39,8 @@ public class CognitiveOcrController {
             LOGGER.info("FINALIZA PROCESO DE RECONOCIMIENTO COGNITIVO PARA LECTURA DE DOCUMENTOS [DT:{}]", DateUtility.getNowInLocalDateTime());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (AbsCognitiveException e) {
-            // TODO SE DEBE IDENTIFICAR EL TIPO DE ERROR PARA REGRESAR EL HHTP CODE CORRESPONDIENTE.
             LOGGER.error("ERROR GENERADO: ", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getExceptionCode().getCode());
         }
     }
 
