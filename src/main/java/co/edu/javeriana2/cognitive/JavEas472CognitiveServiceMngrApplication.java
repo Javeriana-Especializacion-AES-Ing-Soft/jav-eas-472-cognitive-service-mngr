@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JavEas472CognitiveServiceMngrApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(JavEas472CognitiveServiceMngrApplication.class, args);
+        SpringApplication.run(JavEas472CognitiveServiceMngrApplication.class);
     }
 
 }

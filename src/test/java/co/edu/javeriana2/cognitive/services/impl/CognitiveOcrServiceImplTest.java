@@ -3,8 +3,10 @@ package co.edu.javeriana2.cognitive.services.impl;
 import co.edu.javeriana2.cognitive.dtos.CognitiveOcrRsDto;
 import co.edu.javeriana2.cognitive.dtos.DocumentProcessInfoDto;
 import co.edu.javeriana2.cognitive.exceptions.AbsCognitiveException;
+import co.edu.javeriana2.cognitive.exceptions.impl.PersistDocumentLogException;
 import co.edu.javeriana2.cognitive.exceptions.impl.UploadDocumentException;
 import co.edu.javeriana2.cognitive.services.IAwsS3Service;
+import co.edu.javeriana2.cognitive.services.ICognitivePersistenceService;
 import co.edu.javeriana2.cognitive.utilities.DocumentUtility;
 import co.edu.javeriana2.cognitive.utilities.ResourceProvider;
 import org.junit.jupiter.api.Assertions;
@@ -22,6 +24,8 @@ class CognitiveOcrServiceImplTest {
     @Mock
     private IAwsS3Service awsS3Service;
     @Mock
+    private ICognitivePersistenceService cognitivePersistenceService;
+    @Mock
     private DocumentUtility documentUtility;
 
     @InjectMocks
@@ -32,9 +36,11 @@ class CognitiveOcrServiceImplTest {
     private DocumentProcessInfoDto documentProcessInfoDto;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws PersistDocumentLogException {
         MockitoAnnotations.initMocks(this);
         documentProcessInfoDto = resourceProvider.getDocumentProcessInfoDtoMock();
+        doNothing().when(cognitivePersistenceService).persistReceived(any());
+        doNothing().when(cognitivePersistenceService).persistStored(any());
     }
 
     @Test

@@ -11,7 +11,7 @@
 #### Instalación.
 
 * Descargue el repositorio `git clone https://github.com/Javeriana-Especializacion-AES-Ing-Soft/jav-eas-472-cognitive-service-mngr.git`
-* Cree la variable de entorno `DATA_BASE_URL` con las credenciales correspondientes a la configuración de MySql realizada en pre-requisitos.
+* Cree las variables de entorno `COGNITIVE_DATABASE_ENDPOINT`, `COGNITIVE_DATABASE_PORT`, `COGNITIVE_DATABASE_SCHEMA`, `COGNITIVE_DATABASE_USER`, `COGNITIVE_DATABASE_PASSWORD` con las credenciales correspondientes a la configuración de MySql realizada en pre-requisitos.
 * Ejecute `mvn clean install` para descargar dependencias y compilar el proyecto.
 
 ### Recurso:
