@@ -44,7 +44,7 @@ public class CognitiveOcrServiceImpl implements ICognitiveOcrService {
     }
 
     @Override
-    public byte[] downloadDocument(UUID uuid, String bucketName) throws AbsCognitiveException {
+    public byte[] downloadDocument(String uuid, String bucketName) throws AbsCognitiveException {
         LOGGER.info("[DI:{}] inicia proceso de validacion de registro de documento y descarga.", uuid);
         StoredEntity storedEntity = cognitivePersistenceService.getStoredEntity(uuid);
         byte[] documentBody = awsS3Service.getDocument(bucketName, storedEntity.getObjectKey());

@@ -50,10 +50,11 @@ public class CognitiveOcrController {
     @GetMapping("/{document-uuid}")
     public ResponseEntity<byte[]> downloadDocument(@RequestHeader(name = "X-Bucket-Name") String bucketName,
                                                    @PathVariable("document-uuid") UUID uuid) {
-        LOGGER.info("[DT:{}] INICIA PROCESO DE RECUPERACION DE DOCUMENTOS [DT:{}]", uuid, DateUtility.getNowInLocalDateTime());
+        String documentId = SanitizeString.sanitize(uuid.toString());
+        LOGGER.info("[DT:{}] INICIA PROCESO DE RECUPERACION DE DOCUMENTOS [DT:{}]", documentId, DateUtility.getNowInLocalDateTime());
         try {
-            byte[] response = cognitiveOcrService.downloadDocument(uuid, bucketName);
-            LOGGER.info("[DT:{}] FINALIZA PROCESO DE RECUPERACION DE DOCUMENTOS [DT:{}]", uuid, DateUtility.getNowInLocalDateTime());
+            byte[] response = cognitiveOcrService.downloadDocument(documentId, bucketName);
+            LOGGER.info("[DT:{}] FINALIZA PROCESO DE RECUPERACION DE DOCUMENTOS [DT:{}]", documentId, DateUtility.getNowInLocalDateTime());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (AbsCognitiveException e) {
             LOGGER.error("ERROR GENERADO: ", e);

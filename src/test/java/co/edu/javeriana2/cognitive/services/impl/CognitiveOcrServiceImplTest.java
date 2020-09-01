@@ -70,20 +70,20 @@ class CognitiveOcrServiceImplTest {
     @Test
     void downloadDocumentTest() throws AbsCognitiveException {
         when(awsS3Service.getDocument(anyString(), anyString())).thenReturn("File".getBytes());
-        byte[] file = cognitiveOcrService.downloadDocument(UUID.randomUUID(), "bucket");
+        byte[] file = cognitiveOcrService.downloadDocument(UUID.randomUUID().toString(), "bucket");
         Assertions.assertTrue(file.length > 0);
     }
 
     @Test
     void downloadDocumentFailedByAwsServiceTest() throws AbsCognitiveException {
         when(awsS3Service.getDocument(anyString(), anyString())).thenThrow(DownloadDocumentException.class);
-        Assertions.assertThrows(AbsCognitiveException.class, () -> cognitiveOcrService.downloadDocument(UUID.randomUUID(), "bucket"));
+        Assertions.assertThrows(AbsCognitiveException.class, () -> cognitiveOcrService.downloadDocument(UUID.randomUUID().toString(), "bucket"));
     }
 
     @Test
     void downloadDocumentFailedByNotFoundDocumentTest() throws AbsCognitiveException {
         when(cognitivePersistenceService.getStoredEntity(any())).thenThrow(PersistDocumentLogException.class);
-        Assertions.assertThrows(AbsCognitiveException.class, () -> cognitiveOcrService.downloadDocument(UUID.randomUUID(), "bucket"));
+        Assertions.assertThrows(AbsCognitiveException.class, () -> cognitiveOcrService.downloadDocument(UUID.randomUUID().toString(), "bucket"));
     }
 
 }
