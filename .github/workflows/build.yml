@@ -1,23 +1,19 @@
-on:
-  push:
-    branches:
-      - master
-      - develop
-      - /.*HU.*/
-  pull_request:
-    types: [opened, synchronize, reopened]
-name: Main Workflow
+name: Build
+on: [push]
 jobs:
   build:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
           java-version: '11'
-      - name: Analyze with SonarCloud
-        run: ./mvnw -B verify sonar:sonar -Dsonar.projectKey=jav-eas-472-cognitive-service-mngr -Dsonar.organization=javeriana-especializacion-aes-ing-soft -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
-        env:
-          GITHUB_TOKEN: ${{ secrets.AES_GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.EAS_SONAR_TOKEN }}
+      - name: Build with Maven
+        run: ./mvnw -B package
