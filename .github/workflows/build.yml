@@ -28,7 +28,7 @@ jobs:
         with:
           java-version: 11
       - name: Analyze with SonarCloud
-        run: mvn -B verify mvn sonar:sonar \
+        run: mvn -B verify sonar:sonar \
           -Dsonar.projectKey=jav-eas-472-cognitive-service-mngr \
           -Dsonar.organization=javeriana-especializacion-aes-ing-soft \
           -Dsonar.host.url=https://sonarcloud.io \
