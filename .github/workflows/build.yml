@@ -4,6 +4,7 @@ on:
       - master
       - develop
       - /.*HU.*/
+      - HU_ECC-14_Guardar_imagen_s3
   pull_request:
     types: [opened, synchronize, reopened]
 name: Main Workflow
