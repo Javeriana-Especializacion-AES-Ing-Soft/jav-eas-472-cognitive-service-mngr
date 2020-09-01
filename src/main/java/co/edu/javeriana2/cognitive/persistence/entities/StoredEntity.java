@@ -47,4 +47,7 @@ public class StoredEntity {
         this.objectKey = objectKey;
     }
 
+    public String getObjectKey() {
+        return objectKey;
+    }
 }
