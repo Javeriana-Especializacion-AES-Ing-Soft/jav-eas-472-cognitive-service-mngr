@@ -7,7 +7,7 @@ public class SanitizeString {
     }
 
     public static String sanitize(String param) {
-        return param.replaceAll("[\n|\r|\t]", "_");
+        return param.replaceAll("[\n|\r|\t]", "_"); // NO SONAR
     }
 
 }
