@@ -67,6 +67,8 @@
         <profile>
             <id>sonar</id>
             <properties>
+                <sonar.sources>.</sonar.sources>
+                <sonar.inclusions>src/main/java/**</sonar.inclusions>
                 <sonar.projectKey>jav-eas-472-cognitive-service-mngr</sonar.projectKey>
                 <sonar.organization>javeriana-especializacion-aes-ing-soft</sonar.organization>
                 <sonar.host.url>https://sonarcloud.io</sonar.host.url>
