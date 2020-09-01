@@ -2,6 +2,7 @@ package co.edu.javeriana2.cognitive.services.impl;
 
 import co.edu.javeriana2.cognitive.dtos.DocumentProcessInfoDto;
 import co.edu.javeriana2.cognitive.exceptions.AbsCognitiveException;
+import co.edu.javeriana2.cognitive.exceptions.impl.DownloadDocumentException;
 import co.edu.javeriana2.cognitive.exceptions.impl.UploadDocumentException;
 import co.edu.javeriana2.cognitive.utilities.ResourceProvider;
 import com.amazonaws.AmazonClientException;
@@ -64,6 +65,25 @@ class AwsS3ServiceImplTest {
     void uploadDocumentAndGetObjectKeyFailedByAWSClientTest() {
         when(s3Client.putObject(any())).thenThrow(AmazonClientException.class);
         Assertions.assertThrows(UploadDocumentException.class, () -> awsS3Service.uploadDocumentAndGetObjectKey(documentProcessInfoDto, uuid));
+    }
+
+    @Test
+    void getDocumentTest() throws AbsCognitiveException {
+        when(s3Client.getObject(any())).thenReturn(resourceProvider.getS3ObjectMock());
+        byte[] file = awsS3Service.getDocument("bucket", "guides/file.jpg");
+        Assertions.assertTrue(file.length > 0);
+    }
+
+    @Test
+    void downloadFileFailedServiceTest() {
+        when(s3Client.getObject(any())).thenThrow(AmazonServiceException.class);
+        Assertions.assertThrows(DownloadDocumentException.class, () -> awsS3Service.getDocument("bucket-failed", "guides/files.jpg"));
+    }
+
+    @Test
+    void downloadFileFailedRequestTest() {
+        when(s3Client.getObject(any())).thenThrow(AmazonClientException.class);
+        Assertions.assertThrows(DownloadDocumentException.class, () -> awsS3Service.getDocument("bucket-", "guides/file-down.jpg"));
     }
 
 }

@@ -91,14 +91,14 @@ class CognitivePersistenceServiceImplTest {
     @Test
     void getStoredEntityTest() throws PersistDocumentLogException {
         when(storedRepository.findById(anyString())).thenReturn(Optional.of(new StoredEntity()));
-        StoredEntity storedEntity = cognitivePersistenceService.getStoredEntity(UUID.randomUUID());
+        StoredEntity storedEntity = cognitivePersistenceService.getStoredEntity(UUID.randomUUID().toString());
         Assertions.assertNotNull(storedEntity);
     }
 
     @Test
     void getStoredEntityFailedByUuidNotFoundTest() {
         when(storedRepository.findById(anyString())).thenReturn(Optional.empty());
-        Assertions.assertThrows(PersistDocumentLogException.class, () -> cognitivePersistenceService.getStoredEntity(UUID.randomUUID()));
+        Assertions.assertThrows(PersistDocumentLogException.class, () -> cognitivePersistenceService.getStoredEntity(UUID.randomUUID().toString()));
     }
 
 

@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public class CognitivePersistenceServiceImpl implements ICognitivePersistenceService {
@@ -61,9 +60,9 @@ public class CognitivePersistenceServiceImpl implements ICognitivePersistenceSer
     }
 
     @Override
-    public StoredEntity getStoredEntity(UUID uuid) throws PersistDocumentLogException {
+    public StoredEntity getStoredEntity(String uuid) throws PersistDocumentLogException {
         LOGGER.info("[DI:{}] inicia proceso de recuperacion de registro almacenado", uuid);
-        Optional<StoredEntity> stored = storedRepository.findById(uuid.toString());
+        Optional<StoredEntity> stored = storedRepository.findById(uuid);
         StoredEntity documentStoredInfo = stored
                 .orElseThrow(() -> new PersistDocumentLogException(CognitiveExceptionCode.DOCUMENT_ID_NOT_FOUND, String.format("[DI:%s] ID NO ENCONTRADO", uuid)));
         LOGGER.info("[DI:{}] finaliza proceso de recuperacion de registro almacenado", uuid);

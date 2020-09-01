@@ -8,4 +8,6 @@ public interface ICognitiveOcrService {
 
     CognitiveOcrRsDto processDocument(DocumentProcessInfoDto documentProcessInfo) throws AbsCognitiveException;
 
+    byte[] downloadDocument(String uuid, String bucketName) throws AbsCognitiveException;
+
 }

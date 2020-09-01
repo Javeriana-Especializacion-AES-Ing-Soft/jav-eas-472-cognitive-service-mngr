@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @CrossOrigin("*") // NO SONAR
 @RequestMapping("/V1/Utilities/documents")
 @RestController
@@ -38,6 +40,21 @@ public class CognitiveOcrController {
         try {
             CognitiveOcrRsDto response = cognitiveOcrService.processDocument(documentProcessInfo);
             LOGGER.info("FINALIZA PROCESO DE RECONOCIMIENTO COGNITIVO PARA LECTURA DE DOCUMENTOS [DT:{}]", DateUtility.getNowInLocalDateTime());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (AbsCognitiveException e) {
+            LOGGER.error("ERROR GENERADO: ", e);
+            return new ResponseEntity<>(e.getExceptionCode().getCode());
+        }
+    }
+
+    @GetMapping("/{document-uuid}")
+    public ResponseEntity<byte[]> downloadDocument(@RequestHeader(name = "X-Bucket-Name") String bucketName,
+                                                   @PathVariable("document-uuid") UUID uuid) {
+        String documentId = SanitizeString.sanitize(uuid.toString());
+        LOGGER.info("[DT:{}] INICIA PROCESO DE RECUPERACION DE DOCUMENTOS [DT:{}]", documentId, DateUtility.getNowInLocalDateTime());
+        try {
+            byte[] response = cognitiveOcrService.downloadDocument(documentId, bucketName);
+            LOGGER.info("[DT:{}] FINALIZA PROCESO DE RECUPERACION DE DOCUMENTOS [DT:{}]", documentId, DateUtility.getNowInLocalDateTime());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (AbsCognitiveException e) {
             LOGGER.error("ERROR GENERADO: ", e);

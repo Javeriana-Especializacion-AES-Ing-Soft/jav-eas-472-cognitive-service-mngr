@@ -42,4 +42,14 @@ Para poder realizar el consumo del recurso que premite extraer por servicio cogn
             409 - CONFLICT - El arreglo de bytes entrante no puede ser transformado en `ByteArrayInputStream` <br>
             500 - INTERNAL_SERVER_ERROR - Error interno (Servicios AWS o almacenamiento en base de datos)</td>
     </tr>
+    <tr>
+            <td>/{document-uuid}</td>
+            <td>Descarga la imagen en un arreglo de bytes.</td>
+            <td>SINCRONA</td>
+            <td>GET</td>
+            <td>200 - OK -</td>
+            <td>404 - NOT_FOUND - Id invalido, no existe el documento <br>
+                409 - CONFLICT - El arreglo de bytes entrante no puede ser transformado en `ByteArrayInputStream` <br>
+                500 - INTERNAL_SERVER_ERROR - Error interno (Servicios AWS o almacenamiento en base de datos)</td>
+        </tr>
 </table>

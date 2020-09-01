@@ -5,8 +5,6 @@ import co.edu.javeriana2.cognitive.persistence.entities.ProcessedEntity;
 import co.edu.javeriana2.cognitive.persistence.entities.ReceivedEntity;
 import co.edu.javeriana2.cognitive.persistence.entities.StoredEntity;
 
-import java.util.UUID;
-
 public interface ICognitivePersistenceService {
 
     void persistReceived(ReceivedEntity receivedEntity) throws PersistDocumentLogException;
@@ -15,6 +13,6 @@ public interface ICognitivePersistenceService {
 
     void persistProcessed(ProcessedEntity receivedEntity) throws PersistDocumentLogException;
 
-    StoredEntity getStoredEntity(UUID uuid) throws PersistDocumentLogException;
+    StoredEntity getStoredEntity(String uuid) throws PersistDocumentLogException;
 
 }
