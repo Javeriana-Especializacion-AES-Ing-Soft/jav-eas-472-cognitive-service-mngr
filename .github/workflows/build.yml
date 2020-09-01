@@ -2,9 +2,7 @@ on:
   push:
     branches:
       - master
-      - develop
-      - /.*HU.*/
-      - HU_ECC-14_Guardar_imagen_s3
+      - 'HU*'
   pull_request:
     types: [opened, synchronize, reopened]
 name: Main Workflow
@@ -20,19 +18,15 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
   sonar:
+    name: Test - SonarCloud Scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Set up JDK
+      - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
-          java-version: 11
-      - name: Analyze with SonarCloud
-        run: mvn -B verify sonar:sonar \
-          -Dsonar.projectKey=jav-eas-472-cognitive-service-mngr \
-          -Dsonar.organization=javeriana-especializacion-aes-ing-soft \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.EAS_SONAR_TOKEN }}
+          java-version: 11.0.4
+      - name: SonarCloud Scan
+        run: mvn -B clean verify -Psonar -Dsonar.login=${{ secrets.EAS_SONAR_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.AES_GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.EAS_SONAR_TOKEN }}
