@@ -5,6 +5,7 @@ import co.edu.javeriana2.cognitive.dtos.DocumentProcessInfoDto;
 import co.edu.javeriana2.cognitive.exceptions.AbsCognitiveException;
 import co.edu.javeriana2.cognitive.services.ICognitiveOcrService;
 import co.edu.javeriana2.cognitive.utilities.DateUtility;
+import co.edu.javeriana2.cognitive.utilities.SanitizeString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class CognitiveOcrController {
         documentProcessInfo.setBucketName(bucketName);
         documentProcessInfo.setExtractType(extractType);
         documentProcessInfo.setFileContent(fileContent);
-        documentProcessInfo.setFileExtension(fileExtension);
+        documentProcessInfo.setFileExtension(SanitizeString.sanitize(fileExtension));
         documentProcessInfo.setRootDirectory(rootDirectory);
         try {
             CognitiveOcrRsDto response = cognitiveOcrService.processDocument(documentProcessInfo);
