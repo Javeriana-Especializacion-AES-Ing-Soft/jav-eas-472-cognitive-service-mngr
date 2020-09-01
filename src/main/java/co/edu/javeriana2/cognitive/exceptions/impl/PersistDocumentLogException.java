@@ -5,6 +5,10 @@ import co.edu.javeriana2.cognitive.exceptions.AbsCognitiveException;
 
 public class PersistDocumentLogException extends AbsCognitiveException {
 
+    public PersistDocumentLogException(CognitiveExceptionCode exceptionCode) {
+        super(exceptionCode);
+    }
+
     public PersistDocumentLogException(CognitiveExceptionCode exceptionCode, String causeMessage) {
         super(exceptionCode, causeMessage);
     }
