@@ -16,7 +16,7 @@
 * Ejecute `mvn clean install` para descargar dependencias y compilar el proyecto [Genera el .jar para poder hacer uso del dockerfile].
 * Si usa docker, ejecute:
     * `docker build -t cognitive-mngr:0.1 .` Para generar la imagen.
-    * `docker run -ti --name cognitive-mngr_01 -p 9095:9095 cognitive-mngr:0.1` Para ejecutar la imagen en el contenedor.
+    * `docker run -e AWS_ACCESS_KEY_ID={access} -e AWS_SECRET_ACCESS_KEY={secret} -ti --name cognitive-mngr_01 -p 9095:9095 cognitive-mngr:0.1` Para ejecutar la imagen en el contenedor. Reemplace {access} y {secret} por las credenciales de IAM en requisitos.
 * Si no usa docker, simplemente `Run` sobre JavEas472CognitiveServiceMngrApplication.class
 
 ### Recurso:
