@@ -8,6 +8,7 @@
 * Restaurar ddl y dml de [aqui](https://github.com/Javeriana-Especializacion-AES-Ing-Soft/jav-eas-472-cognitive-service-data-model/tree/master/src).
 * Instalación y configuración de AWS CLI. Solicitar secrets y access key por IAM a su administrador.
 * Instalación de docker. [En caso de trabajar con imagenes, de lo contrario iniciar JavEas472CognitiveServiceMngrApplication]
+    * Cree un network para comunicación en local entre microservicios. `docker network create cognitive-network`
  
 #### Instalación.
 
@@ -16,7 +17,7 @@
 * Ejecute `mvn clean install` para descargar dependencias y compilar el proyecto [Genera el .jar para poder hacer uso del dockerfile].
 * Si usa docker, ejecute:
     * `docker build -t cognitive-mngr:0.1 .` Para generar la imagen.
-    * `docker run -ti --name cognitive-mngr_01 -p 9095:9095 cognitive-mngr:0.1` Para ejecutar la imagen en el contenedor.
+    * `docker run --network cognitive-network -e AWS_ACCESS_KEY_ID={access} -e AWS_SECRET_ACCESS_KEY={secret} -ti --name cognitive-mngr_01 -p 9095:9095 cognitive-mngr:0.1` Para ejecutar la imagen en el contenedor. Reemplace {access} y {secret} por las credenciales de IAM en requisitos.
 * Si no usa docker, simplemente `Run` sobre JavEas472CognitiveServiceMngrApplication.class
 
 ### Recurso:
