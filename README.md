@@ -5,7 +5,7 @@
 #### Requisitos.
 
 * MySql instalado y configurado. [En caso de uso local]
-* Restaurar ddl y dml de link.
+* Restaurar ddl y dml de [aqui](https://github.com/Javeriana-Especializacion-AES-Ing-Soft/jav-eas-472-cognitive-service-data-model/tree/master/src).
 * Instalación y configuración de AWS CLI. Solicitar secrets y access key por IAM a su administrador.
 * Instalación de docker. [En caso de trabajar con imagenes, de lo contrario iniciar JavEas472CognitiveServiceMngrApplication]
  
