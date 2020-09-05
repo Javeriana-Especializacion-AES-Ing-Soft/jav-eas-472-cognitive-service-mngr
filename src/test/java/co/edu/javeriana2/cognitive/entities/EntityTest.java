@@ -1,13 +1,10 @@
 package co.edu.javeriana2.cognitive.entities;
 
-
 import co.edu.javeriana2.cognitive.dtos.CognitiveOcrRsDto;
-import co.edu.javeriana2.cognitive.dtos.DocumentProcessInfoDto;
 import co.edu.javeriana2.cognitive.persistence.entities.ProcessedEntity;
 import co.edu.javeriana2.cognitive.persistence.entities.ReceivedEntity;
 import co.edu.javeriana2.cognitive.persistence.entities.StoredEntity;
 import co.edu.javeriana2.cognitive.utilities.EntityUtilityTest;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

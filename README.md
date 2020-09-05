@@ -2,17 +2,22 @@
 
 ### Proceso de instalación
 
-#### Pre-requisitos.
+#### Requisitos.
 
-* MySql instalado y configurado.
+* MySql instalado y configurado. [En caso de uso local]
 * Restaurar ddl y dml de [aqui](https://github.com/Javeriana-Especializacion-AES-Ing-Soft/jav-eas-472-cognitive-service-data-model/tree/master/src).
 * Instalación y configuración de AWS CLI. Solicitar secrets y access key por IAM a su administrador.
+* Instalación de docker. [En caso de trabajar con imagenes, de lo contrario iniciar JavEas472CognitiveServiceMngrApplication]
  
 #### Instalación.
 
 * Descargue el repositorio `git clone https://github.com/Javeriana-Especializacion-AES-Ing-Soft/jav-eas-472-cognitive-service-mngr.git`
-* Cree las variables de entorno `COGNITIVE_DATABASE_ENDPOINT`, `COGNITIVE_DATABASE_PORT`, `COGNITIVE_DATABASE_SCHEMA`, `COGNITIVE_DATABASE_USER`, `COGNITIVE_DATABASE_PASSWORD` con las credenciales correspondientes a la configuración de MySql realizada en pre-requisitos.
-* Ejecute `mvn clean install` para descargar dependencias y compilar el proyecto.
+* Reemplace en el archivo .properties `COGNITIVE_DATABASE_ENDPOINT`, `COGNITIVE_DATABASE_PORT`, `COGNITIVE_DATABASE_SCHEMA`, `COGNITIVE_DATABASE_USER`, `COGNITIVE_DATABASE_PASSWORD` con las credenciales correspondientes a la conexión a MySql.
+* Ejecute `mvn clean install` para descargar dependencias y compilar el proyecto [Genera el .jar para poder hacer uso del dockerfile].
+* Si usa docker, ejecute:
+    * `docker build -t cognitive-mngr:0.1 .` Para generar la imagen.
+    * `docker run -ti --name cognitive-mngr_01 -p 9095:9095 cognitive-mngr:0.1` Para ejecutar la imagen en el contenedor.
+* Si no usa docker, simplemente `Run` sobre JavEas472CognitiveServiceMngrApplication.class
 
 ### Recurso:
 
