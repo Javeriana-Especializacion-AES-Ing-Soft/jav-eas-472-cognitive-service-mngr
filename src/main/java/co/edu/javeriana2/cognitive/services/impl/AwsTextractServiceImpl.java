@@ -4,6 +4,7 @@ import co.edu.javeriana2.cognitive.enums.CognitiveExceptionCode;
 import co.edu.javeriana2.cognitive.exceptions.impl.DetectTextException;
 import co.edu.javeriana2.cognitive.services.IAwsTextractService;
 import co.edu.javeriana2.cognitive.utilities.JsonUtility;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.textract.AmazonTextract;
 import com.amazonaws.services.textract.AmazonTextractClientBuilder;
 import com.amazonaws.services.textract.model.DetectDocumentTextRequest;
@@ -21,7 +22,7 @@ public class AwsTextractServiceImpl implements IAwsTextractService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AwsTextractServiceImpl.class);
 
-    protected AmazonTextract awsTextractClient = AmazonTextractClientBuilder.defaultClient();
+    protected AmazonTextract awsTextractClient = AmazonTextractClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
 
     @Override
     public DetectDocumentTextResult callService(String bucketName, String objectKey, UUID documentId) throws DetectTextException {
