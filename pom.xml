@@ -51,6 +51,11 @@
             <artifactId>aws-java-sdk-s3</artifactId>
             <version>1.11.851</version>
         </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-textract</artifactId>
+            <version>1.11.851</version>
+        </dependency>
         <!-- Others dependencies -->
         <dependency>
             <groupId>javax.xml.bind</groupId>

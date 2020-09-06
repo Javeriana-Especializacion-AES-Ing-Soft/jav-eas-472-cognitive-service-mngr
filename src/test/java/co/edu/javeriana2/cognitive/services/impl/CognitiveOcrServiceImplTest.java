@@ -7,6 +7,7 @@ import co.edu.javeriana2.cognitive.exceptions.impl.DownloadDocumentException;
 import co.edu.javeriana2.cognitive.exceptions.impl.PersistDocumentLogException;
 import co.edu.javeriana2.cognitive.exceptions.impl.UploadDocumentException;
 import co.edu.javeriana2.cognitive.services.IAwsS3Service;
+import co.edu.javeriana2.cognitive.services.IAwsTextractService;
 import co.edu.javeriana2.cognitive.services.ICognitivePersistenceService;
 import co.edu.javeriana2.cognitive.utilities.DocumentUtility;
 import co.edu.javeriana2.cognitive.utilities.ResourceProvider;
@@ -26,6 +27,8 @@ class CognitiveOcrServiceImplTest {
 
     @Mock
     private IAwsS3Service awsS3Service;
+    @Mock
+    private IAwsTextractService awsTextractService;
     @Mock
     private ICognitivePersistenceService cognitivePersistenceService;
     @Mock
@@ -51,6 +54,7 @@ class CognitiveOcrServiceImplTest {
     void processDocumentTest() throws AbsCognitiveException {
         doNothing().when(documentUtility).validateDocumentExtension(any(), anyString());
         when(awsS3Service.uploadDocumentAndGetObjectKey(any(), any())).thenReturn("guides/2020/08/30/987321342-234-23.jpge");
+        when(awsTextractService.callService(anyString(), anyString(), any())).thenReturn(null);
         CognitiveOcrRsDto cognitiveOcrRsDto = cognitiveOcrService.processDocument(documentProcessInfoDto);
         Assertions.assertNotNull(cognitiveOcrRsDto.getUuid());
     }
