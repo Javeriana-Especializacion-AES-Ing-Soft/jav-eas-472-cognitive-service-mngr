@@ -9,7 +9,6 @@ class JavEas472CognitiveServiceMngrApplicationTests {
 
     @Test
     void contextLoads() {
-        String test = "main test";
         Assertions.assertDoesNotThrow(() -> JavEas472CognitiveServiceMngrApplication.main(new String[]{"args"}));
     }
 

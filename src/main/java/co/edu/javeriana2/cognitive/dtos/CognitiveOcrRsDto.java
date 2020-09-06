@@ -1,13 +1,13 @@
 package co.edu.javeriana2.cognitive.dtos;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.amazonaws.services.textract.model.DetectDocumentTextResult;
 
 import java.util.UUID;
 
 public class CognitiveOcrRsDto {
 
     private UUID uuid;
-    private JsonNode cognitiveServiceResponse;
+    private DetectDocumentTextResult cognitiveServiceResponse;
 
     public UUID getUuid() {
         return uuid;
@@ -17,12 +17,11 @@ public class CognitiveOcrRsDto {
         this.uuid = uuid;
     }
 
-    public JsonNode getCognitiveServiceResponse() {
+    public DetectDocumentTextResult getCognitiveServiceResponse() {
         return cognitiveServiceResponse;
     }
 
-    public void setCognitiveServiceResponse(JsonNode cognitiveServiceResponse) {
+    public void setCognitiveServiceResponse(DetectDocumentTextResult cognitiveServiceResponse) {
         this.cognitiveServiceResponse = cognitiveServiceResponse;
     }
-
 }
