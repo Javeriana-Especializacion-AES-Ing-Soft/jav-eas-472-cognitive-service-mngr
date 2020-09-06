@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 class AwsTextractServiceImplTest {
 
     @Mock
-    protected AmazonTextract awsTextractClient;
+    private AmazonTextract awsTextractClient;
 
     @InjectMocks
     private AwsTextractServiceImpl awsTextractService;
